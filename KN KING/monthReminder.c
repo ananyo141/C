@@ -1,5 +1,6 @@
 // Print a month-reminder
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define MAX_REM 50
