@@ -3,14 +3,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+// macro def //
 #define MAX_REM 50
 #define MAX_CHAR 60
+#define DEBUG(x) printf(#x " = %d\n", x)
 
+// function prototypes //
 int readline (char *sentence, int arr_size);
 
+// driver function //
 int main() {
     int i, j, day, numReminders = 0, time;
-    char day_str[3], time_str[3], datetime[8], message[MAX_CHAR], reminders[MAX_REM][MAX_CHAR + 3];
+    char day_str[3], time_str[3], datetime[8], message[MAX_CHAR];
+    char *reminders[MAX_REM];
 
     for (;;) {
 
@@ -30,7 +35,7 @@ int main() {
             continue;
         }
 
-        readline(message, MAX_CHAR);
+        int msg_len = readline(message, MAX_CHAR);
         // convert day into str
         sprintf(day_str, "%2d", day);
         sprintf(time_str, "%2d", time);
@@ -44,7 +49,14 @@ int main() {
                 break;
         // make space to insert the correct date in the array
         for (j = numReminders; j > i; j--) 
-            strcpy(reminders[j], reminders[j - 1]);
+            reminders[j] = reminders[j - 1];
+
+        // allocate space for reminder
+        reminders[i] = malloc(5 + msg_len + 1);
+        if (reminders[i] == NULL) {
+            printf("--- No Space Left ---\n");
+            exit(EXIT_FAILURE);
+        }
 
         // insert the reminder in position
         strcpy(reminders[i], datetime);
