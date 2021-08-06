@@ -1,5 +1,6 @@
 // Create the Parts Database but use linked list instead of array.
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 
@@ -42,7 +43,7 @@ int main() {
         else if (strcmp(command, "quit") == 0) return 0;
         else printf("Invalid command\n");
     }
-    printf('\n');
+    printf("\n");
 }
 
 // find a part from the linked list and return the struct pointer
@@ -76,7 +77,7 @@ void insert(void) {
          prev = cur, cur = cur->next) ;
     
     // if part number is equal, i.e, already exists
-    if (cur != NULL && new_node == cur->number) {
+    if (cur != NULL && new_node->number == cur->number) {
         printf("Part already exists.\n");
         free(new_node);
         return;
@@ -86,7 +87,7 @@ void insert(void) {
     printf("Enter part name: ");
     read_line(new_node->name, NAME_LEN);
     printf("Enter quantity on hand: ");
-    scanf("%d", new_node->on_hand);
+    scanf("%d", &new_node->on_hand);
 
     // rewiring the nodes at corresponding position to refer to new node
     // to maintain sort
