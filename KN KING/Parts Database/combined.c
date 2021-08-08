@@ -30,10 +30,11 @@ int read_line(char str[], int n);
 // variable definition
 struct part *inventory;
 int space_available = PARTS_SPACE_INCREMENT;
+int num_parts = 0;
 
 int main() {
     // make initial space for inventory 
-    inventory = malloc(3 * sizeof(struct part));
+    inventory = malloc(2 * sizeof(struct part));
     printf("inv malloc = %p\n", inventory);
     if (inventory == NULL) {
         printf("Heap memory failure, failed to initialize database\n"); 
@@ -44,26 +45,30 @@ int main() {
     void (*available_commands[])(void) = {insert, search, update, print}; // array of available function pointer
     enum command_enum {INSERT, SEARCH, UPDATE, PRINT} command_val;
     for (;;) {
-        printf("Enter Command: ");
-        read_line(command, COMMAND_LEN);
+        // printf("Enter Command: ");
+        // read_line(command, COMMAND_LEN);
 
-        if      (strcmp(command, "insert") == 0)   available_commands[INSERT]();
-        else if (strcmp(command, "search") == 0)   available_commands[SEARCH]();
-        else if (strcmp(command, "update") == 0)   available_commands[UPDATE]();
-        else if (strcmp(command, "print" ) == 0)   available_commands[PRINT]();
-        else if (strcmp(command, "exit"  ) == 0)   {printf("\n*** Thank you for using Parts Database written in C ***\n\n"); return 0;}
-        else                                       printf("Invalid command\n");
+        // if      (strcmp(command, "insert") == 0)   available_commands[INSERT]();
+        // else if (strcmp(command, "search") == 0)   available_commands[SEARCH]();
+        // else if (strcmp(command, "update") == 0)   available_commands[UPDATE]();
+        // else if (strcmp(command, "print" ) == 0)   available_commands[PRINT]();
+        // else if (strcmp(command, "exit"  ) == 0)   {printf("\n*** Thank you for using Parts Database written in C ***\n\n"); return 0;}
+        // else                                       printf("Invalid command\n");
+
+        inventory[num_parts].number = 3;
+        strcpy(inventory[num_parts].name, "test");
+        inventory[num_parts].on_hand = 3;
 
         if (is_full()) {
             printf("Extending storage for more storage allocation\n");
             expand(PARTS_SPACE_INCREMENT);
         }
+        num_parts++;
     }
 
     return 0;
 }
 
-int num_parts = 0;
 
 int find_part(int number) {
     for (int i = 0; i < num_parts; i++)
@@ -146,7 +151,7 @@ void expand(int req_space) {
     DEBUG(space_available);
     printf("inv malloc = %p\n", inventory);
 
-    inventory = realloc(inventory, space_available * sizeof(struct part));
+    inventory = realloc(inventory, (num_parts + 1 + req_space) * sizeof(struct part));
     printf("inv malloc = %p\n", inventory);
 
     if (inventory == NULL) {
@@ -157,7 +162,7 @@ void expand(int req_space) {
 
 // check if the array is full
 bool is_full(void) {
-    return (space_available == num_parts) ? true : false;
+    return (space_available == num_parts + 1) ? true : false;
 }
 
 // read string from stdin
