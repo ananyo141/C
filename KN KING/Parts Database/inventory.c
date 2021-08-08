@@ -32,7 +32,7 @@ int main() {
         else                                       printf("Invalid command\n");
 
         if (is_full()) {
-            printf("Extending storage for allocating more storage\n");
+            printf("Extending storage for more storage allocation\n");
             expand(PARTS_SPACE_INCREMENT);
         }
     }
