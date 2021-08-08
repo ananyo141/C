@@ -27,8 +27,8 @@ int main() {
         if      (strcmp(command, "insert") == 0)   available_commands[INSERT]();
         else if (strcmp(command, "search") == 0)   available_commands[SEARCH]();
         else if (strcmp(command, "update") == 0)   available_commands[UPDATE]();
-        else if (strcmp(command, "print") == 0)    available_commands[PRINT]();
-        else if (strcmp(command, "exit") == 0)     {printf("\n*** Thank you for using Parts Database written in C ***\n\n"); return 0;}
+        else if (strcmp(command, "print" ) == 0)   available_commands[PRINT]();
+        else if (strcmp(command, "exit"  ) == 0)   {printf("\n*** Thank you for using Parts Database written in C ***\n\n"); return 0;}
         else                                       printf("Invalid command\n");
 
         if (is_full()) {

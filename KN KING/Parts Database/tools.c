@@ -28,13 +28,16 @@ void insert(void) {
         return;
     }
     int insert_pos;
+
     // find the appropriate position to insert the part
     for (insert_pos = 0; insert_pos < num_parts; insert_pos++) 
         if (part_number <= inventory[insert_pos].number)
             break;
+
     // scoot the trailing parts to make space
     for (int i = num_parts; i >= insert_pos; i--)
         inventory[i + 1] = inventory[i];
+        
     // insert at the position
     inventory[insert_pos].number = part_number;
     printf("Enter part name: ");
@@ -90,6 +93,7 @@ void expand(int req_space) {
     DEBUG(space_available);
 }
 
+// check if the array is full
 bool is_full(void) {
     return (space_available == num_parts) ? true : false;
 }
