@@ -87,6 +87,7 @@ void expand(int req_space) {
         exit(EXIT_FAILURE);
     }
     space_available += req_space;
+    DEBUG(space_available);
 }
 
 bool is_full(void) {
