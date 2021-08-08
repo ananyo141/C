@@ -11,12 +11,16 @@ struct part {
     int on_hand;
 };
 // variable declaration
-extern struct part inventory[];
+extern struct part *inventory;
+extern int space_available;
 
+// function declarations
 int find_part(int number);
 void insert(void);
 void search(void);
 void update(void);
 void print(void);
+void expand(int req_space);
+bool is_full(void);
 
 #endif

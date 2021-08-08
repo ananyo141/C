@@ -1,3 +1,5 @@
+# Ignore library and binary files generated during runtime
 *.exe
 *.o
 *.obj
+.vscode/
