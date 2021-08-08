@@ -151,7 +151,7 @@ void expand(int req_space) {
     DEBUG(space_available);
     printf("inv malloc = %p\n", inventory);
 
-    inventory = realloc(inventory, (num_parts + 1 + req_space) * sizeof(struct part));
+    inventory = realloc(inventory, sizeof(struct part) * space_available);
     printf("inv malloc = %p\n", inventory);
 
     if (inventory == NULL) {

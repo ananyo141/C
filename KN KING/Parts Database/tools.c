@@ -85,7 +85,6 @@ void print(void) {
 // Expand the storage for inventory array as needed
 void expand(int req_space) {
     space_available += req_space;
-    printf("this");
     inventory = realloc(inventory, sizeof(struct part) * space_available);
     if (inventory == NULL) {
         printf("Heap memory failure, no space left to allocate\n"); 
@@ -96,5 +95,5 @@ void expand(int req_space) {
 
 // check if the array is full
 bool is_full(void) {
-    return (space_available == num_parts) ? true : false;
+    return (space_available == num_parts + 1) ? true : false;
 }
