@@ -5,11 +5,6 @@
 #include "readline.h"
 #include "tools.h"
 
-#define PARTS_SPACE_INCREMENT 10
-
-// TODO: Use malloc and realloc to allocate and expand the size of the parts array
-
-
 // variable definition
 struct part *inventory;
 int space_available = PARTS_SPACE_INCREMENT;

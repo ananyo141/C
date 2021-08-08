@@ -4,12 +4,14 @@
 #define NAME_LEN 25
 #define MAX_PARTS 100
 #define COMMAND_LEN 10
+#define PARTS_SPACE_INCREMENT 10
 
 struct part {
     int number;
     char name[NAME_LEN + 1];
     int on_hand;
 };
+
 // variable declaration
 extern struct part *inventory;
 extern int space_available;
