@@ -4,7 +4,7 @@
 #define NAME_LEN 25
 #define MAX_PARTS 100
 #define COMMAND_LEN 10
-#define PARTS_SPACE_INCREMENT 2
+#define PARTS_SPACE_INCREMENT 10
 
 struct part {
     int number;
