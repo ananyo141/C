@@ -8,7 +8,7 @@
 #define NAME_LEN 25
 #define MAX_PARTS 100
 #define COMMAND_LEN 10
-#define PARTS_SPACE_INCREMENT 1
+#define PARTS_SPACE_INCREMENT 2
 #define DEBUG(x) printf(#x " = %d\n", x)
 
 struct part {
@@ -33,7 +33,8 @@ int space_available = PARTS_SPACE_INCREMENT;
 
 int main() {
     // make initial space for inventory 
-    inventory = malloc (sizeof(struct part) * PARTS_SPACE_INCREMENT);
+    inventory = malloc(3 * sizeof(struct part));
+    printf("inv malloc = %p\n", inventory);
     if (inventory == NULL) {
         printf("Heap memory failure, failed to initialize database\n"); 
         exit(EXIT_FAILURE);
@@ -142,12 +143,16 @@ void print(void) {
 // Expand the storage for inventory array as needed
 void expand(int req_space) {
     space_available += req_space;
-    inventory = realloc(inventory, sizeof(struct part) * space_available);
+    DEBUG(space_available);
+    printf("inv malloc = %p\n", inventory);
+
+    inventory = realloc(inventory, space_available * sizeof(struct part));
+    printf("inv malloc = %p\n", inventory);
+
     if (inventory == NULL) {
         printf("Heap memory failure, no space left to allocate\n"); 
         exit(EXIT_FAILURE);
     }
-    DEBUG(space_available);
 }
 
 // check if the array is full

@@ -2,19 +2,28 @@
 #include <stdlib.h>
 
 int *ptr;
+int total = 1;
+
+void expand(int size) {
+    printf("before = %p", ptr);
+    total += size;
+    ptr = realloc(ptr, sizeof(int) * (total));
+    printf(", after = %p\n", ptr);
+}
 
 int main()
 {
-    ptr = (int *)malloc(sizeof(int) * 2);
-    int i;
+    ptr = malloc(sizeof(int));
+    int filled = 0;
 
-    *ptr = 10;
-    *(ptr + 1) = 20;
+    for(;;) {
+        ptr[filled++] = 3;
 
-    ptr = (int *)realloc(ptr, sizeof(int) * 3);
-    *(ptr + 2) = 30;
-    for (i = 0; i < 3; i++)
-        printf("%d \n", *(ptr + i));
+        for (int i = 0; i < filled; i++)
+            printf("%d ", ptr[i]);
+        printf("\n");
+        expand(1);
+    }
 
     return 0;
 }
