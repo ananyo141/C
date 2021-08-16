@@ -30,18 +30,17 @@ int main(int argc, char *argv[]) {
         if (strchr(spChar, ch) != NULL) {
             while (strchr(spChar, ch) != NULL)
                 ch = getc(stream);
-            ungetc(ch, stream);   // put back the normal character for further reading
-            word_count++;
-            if ((ch = getc(stream)) == EOF)
+            if (ch == EOF)
                 line_count++;
-            ungetc(ch, stream);
+            word_count++;
+            ungetc(ch, stream);   // put back character for further reading
         }
-        else if (isspace(ch)) 
+        else if (ch == '\n') 
             line_count++;
-        
         else if (isdigit(ch) || isalpha(ch)) 
             ch_count++;
     }
+    
     fclose(stream);
 
     // print results
