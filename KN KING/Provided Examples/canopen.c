@@ -1,5 +1,4 @@
 // See if the file can be opened
-
 #include <stdio.h>
 #include <stdlib.h>
 
