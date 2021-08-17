@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     // close opened files
     fclose(file);
     fclose(fileOut);
-    printf("File %s successfully compressed and saved as %s\n", argv[1], savename);
+    printf("File %s successfully compressed.\nFile saved as %s\n", argv[1], savename);
 
     return 0;
 }

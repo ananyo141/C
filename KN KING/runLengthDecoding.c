@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     }
     fclose(fileInp);
     fclose(fileOut);
-    printf("File %s successfully decompressed and saved as %s\n", argv[1], savefilename);
+    printf("File %s successfully decompressed.\nFile saved as %s\n", argv[1], savefilename);
 
     return 0;
 }
