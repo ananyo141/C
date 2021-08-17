@@ -24,20 +24,20 @@ int main(int argc, char *argv[]) {
     }
     int ch, compare, counter;
     while ((ch = getc(file)) != EOF) {
-        counter = 1;    // init counter
-        compare = ch;   // current variable
+        counter = 1;      // init counter
+        compare = ch;     // current character
         // count number of same bytes
         while ((ch = getc(file)) == compare) 
             counter++;
-        ungetc(ch, file);
-
-        // write the repetation count and the byte
+        ungetc(ch, file); // put back unmatched character
+        // write the repetition count and the byte
         putc(counter, fileOut);
         putc(compare, fileOut);
     }
     // close opened files
     fclose(file);
     fclose(fileOut);
+    printf("File %s successfully compressed and saved as %s\n", argv[1], savename);
 
     return 0;
 }
