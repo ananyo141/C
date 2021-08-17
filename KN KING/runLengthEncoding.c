@@ -22,9 +22,10 @@ int main(int argc, char *argv[]) {
         fclose(file);
         exit(EXIT_FAILURE);
     }
-    int ch, compare, counter = 0;
+    int ch, compare, counter;
     while ((ch = getc(file)) != EOF) {
-        compare = ch;
+        counter = 1;    // init counter
+        compare = ch;   // current variable
         // count number of same bytes
         while ((ch = getc(file)) == compare) 
             counter++;
