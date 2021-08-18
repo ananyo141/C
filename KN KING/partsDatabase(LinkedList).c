@@ -6,7 +6,6 @@
 
 // macro definitions //
 #define NAME_LEN 25
-#define NAME_LEN 25
 #define COMMAND_LEN 10
 
 // part structure //
@@ -27,21 +26,29 @@ void insert(void);
 void search(void);
 void update(void);
 void print(void);
+void save(void);
+void restore(void);
 
 int main() {
     char command[COMMAND_LEN + 1]; // store the input command
-    void (*available_commands[])(void) = {insert, search, update, print}; // array of available function pointer
-    enum command_enum {INSERT, SEARCH, UPDATE, PRINT} command_val;
+    void (*available_commands[])(void) = {insert, search, update, print, save, restore}; // array of available function pointer
+    enum command_enum {INSERT, SEARCH, UPDATE, PRINT, SAVE, RESTORE} command_val;
     for (;;) {
         printf("Enter Command: ");
         read_line(command, COMMAND_LEN);
 
-        if (strcmp(command, "insert") == 0) available_commands[INSERT]();
-        else if (strcmp(command, "search") == 0) available_commands[SEARCH]();
-        else if (strcmp(command, "update") == 0) available_commands[UPDATE]();
-        else if (strcmp(command, "print") == 0) available_commands[PRINT]();
-        else if (strcmp(command, "quit") == 0) return 0;
-        else printf("Invalid command\n");
+        if      (strcmp (command, "insert" ) == 0)  available_commands[INSERT] ();
+        else if (strcmp (command, "search" ) == 0)  available_commands[SEARCH] ();
+        else if (strcmp (command, "update" ) == 0)  available_commands[UPDATE] ();
+        else if (strcmp (command, "print"  ) == 0)  available_commands[PRINT]  ();
+        else if (strcmp (command, "save"   ) == 0)  available_commands[SAVE]   ();    
+        else if (strcmp (command, "restore") == 0)  available_commands[RESTORE]();
+        else if (strcmp (command, "exit"   ) == 0)  {
+            puts("\n*** Thank you for using Parts Database written in C ***\n");
+            return 0;                              
+        }
+        else
+            puts("Invalid command");
     }
     printf("\n");
 }
@@ -138,6 +145,60 @@ void print(void) {
 
     for (p = inventory; p != NULL; p = p->next) 
         printf("%5d            %-26s%8d\n", p->number, p->name, p->on_hand);
+}
+
+void save(void) {
+    FILE *savefile;
+    char savefilename[FILENAME_MAX];
+    printf("Enter the save filepath: ");
+    read_line(savefilename, FILENAME_MAX);
+    if ((savefile = fopen(savefilename, "wb")) == NULL) {
+        printf("File %s couldn't be opened for writing\n", savefilename);
+        exit(EXIT_FAILURE);
+    }
+    // write data to save file
+    // visit each node, write part number, name and quantity
+    for (struct part *p = inventory; p != NULL; p = p->next) {
+        fwrite(&p->number, sizeof(int), 1, savefile);                  // write part number
+        fwrite(&p->name, sizeof(char), strlen(p->name) + 1, savefile); // write part name
+        fwrite(&p->on_hand, sizeof(int), 1, savefile);                 // write quantity
+    }
+    puts("Savefile generated");
+
+    fclose(savefile);
+}
+
+void restore(void) {
+    FILE *readfile;
+    char readfilename[FILENAME_MAX];
+    printf("Enter the restore filepath: ");
+    read_line(readfilename, FILENAME_MAX);
+    if ((readfile = fopen(readfilename, "rb")) == NULL) {
+        printf("File %s couldn't be read\n", readfilename);
+        exit(EXIT_FAILURE);
+    }
+    // destroy the existing list
+    for (struct part *next_p, *p = inventory; p != NULL; p = next_p) {
+        next_p = p->next;
+        free(p);
+    }
+    // rebuild the linked list from the entered file
+    int temp_numb, temp_onhand;
+    char temp_name[NAME_LEN];
+    for (struct part *p = inventory; p != NULL; p = p->next) {
+        p = malloc(sizeof(struct part));
+        if (p = NULL) {
+            fprintf(stderr, "Unable to allocate memory. Terminating...\n");
+            exit(EXIT_FAILURE);
+        }
+        if (!(fread(&temp_numb, sizeof(int), 1, readfile)))
+            break;
+        int ch, i = 0;
+        while ((ch = getc(readfile)) != '\0')
+            temp_name[i++] = ch;
+        temp_name[i] = '\0';
+        fread(&temp_onhand, sizeof(int), 1, readfile);}
+
 }
 
 // read string from stdin
