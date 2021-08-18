@@ -5,6 +5,7 @@
 #define MAX_PARTS 100
 #define COMMAND_LEN 10
 #define PARTS_SPACE_INCREMENT 10
+#define FILENAME_MAX 50
 
 struct part {
     int number;
@@ -24,5 +25,7 @@ void update(void);
 void print(void);
 void expand(int req_space);
 bool is_full(void);
+void save(void);
+void restore(void);
 
 #endif

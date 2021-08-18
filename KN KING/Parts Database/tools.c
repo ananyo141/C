@@ -97,3 +97,27 @@ void expand(int req_space) {
 bool is_full(void) {
     return (space_available == num_parts + 1) ? true : false;
 }
+
+void save(void) {
+    char savefilename[FILENAME_MAX];
+    FILE *savefile;
+    printf("Enter the save filepath: ");
+    read_line(savefilename, FILENAME_MAX);
+    if ((savefile = fopen(savefilename, "wb")) == NULL) {
+        printf("File %s couldn't be opened for writing\n", savefilename);
+        exit(EXIT_FAILURE);
+    }
+    // save the dynamically allocated array in the file
+    if (fwrite(inventory, sizeof(struct part), num_parts + 1, savefile) == num_parts + 1)
+        puts("Inventory successfully saved");
+    else
+        puts("Error writing to savefile");
+
+    fclose(savefile);
+}
+
+void restore(void) {
+    char readfilename[FILENAME_MAX];
+    printf("Enter the save filepath: ");
+    read_line(readfilename, FILENAME_MAX);
+}

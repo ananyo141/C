@@ -18,18 +18,24 @@ int main() {
     }
 
     char command[COMMAND_LEN + 1]; // store the input command
-    void (*available_commands[])(void) = {insert, search, update, print}; // array of available function pointer
-    enum command_enum {INSERT, SEARCH, UPDATE, PRINT} command_val;
+    void (*available_commands[])(void) = {insert, search, update, print, save, restore}; // array of available function pointer
+    enum command_enum {INSERT, SEARCH, UPDATE, PRINT, SAVE, RESTORE} command_val;
     for (;;) {
         printf("Enter Command: ");
         read_line(command, COMMAND_LEN);
 
-        if      (strcmp(command, "insert") == 0)   available_commands[INSERT]();
-        else if (strcmp(command, "search") == 0)   available_commands[SEARCH]();
-        else if (strcmp(command, "update") == 0)   available_commands[UPDATE]();
-        else if (strcmp(command, "print" ) == 0)   available_commands[PRINT]();
-        else if (strcmp(command, "exit"  ) == 0)   {printf("\n*** Thank you for using Parts Database written in C ***\n\n"); return 0;}
-        else                                       printf("Invalid command\n");
+        if      (strcmp (command, "insert") == 0)  available_commands[INSERT] ();
+        else if (strcmp (command, "search") == 0)  available_commands[SEARCH] ();
+        else if (strcmp (command, "update") == 0)  available_commands[UPDATE] ();
+        else if (strcmp (command, "print" ) == 0)  available_commands[PRINT]  ();
+        else if (strcmp (command, "save"  ) == 0)  available_commands[SAVE]   ();    
+        else if (strcmp(command, "restore") == 0)  available_commands[RESTORE]();
+        else if (strcmp(command, "exit"   ) == 0)  {
+            printf("\n*** Thank you for using Parts Database written in C ***\n\n");
+            return 0;                              
+        }
+        else
+            puts("Invalid command");
 
         if (is_full()) {
             printf("Extending storage for more storage allocation\n");
