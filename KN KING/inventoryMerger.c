@@ -38,12 +38,13 @@ int main(int argc, char *argv[]) {
     int totalPart;
     // read the data of first binary to buffer
     for (totalPart = 0; fread(&buffer[totalPart], sizeof(struct part), 1, bin1); totalPart++) ;
+    totalPart--;    // discard the failed read
     fclose(bin1);
 
     // read and sort the second binary to buffer
     struct part temp;
     while (fread(&temp, sizeof(struct part), 1, bin2)) {
-        // ignore a trailing pseudo-part with 0 part number
+        // discard the failed read (trailing pseudo-part with 0 part number)
         if (temp.number == 0)
             continue;
         int index;
