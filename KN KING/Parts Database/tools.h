@@ -5,7 +5,6 @@
 #define MAX_PARTS 100
 #define COMMAND_LEN 10
 #define PARTS_SPACE_INCREMENT 10
-#define FILENAME_MAX 50
 
 struct part {
     int number;

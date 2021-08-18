@@ -99,8 +99,8 @@ bool is_full(void) {
 }
 
 void save(void) {
-    char savefilename[FILENAME_MAX];
     FILE *savefile;
+    char savefilename[FILENAME_MAX];
     printf("Enter the save filepath: ");
     read_line(savefilename, FILENAME_MAX);
     if ((savefile = fopen(savefilename, "wb")) == NULL) {
@@ -117,7 +117,18 @@ void save(void) {
 }
 
 void restore(void) {
+    FILE *readfile;
     char readfilename[FILENAME_MAX];
     printf("Enter the save filepath: ");
     read_line(readfilename, FILENAME_MAX);
+    if ((readfile = fopen(readfilename, "rb")) == NULL) {
+        printf("File %s couldn't be read\n", readfilename);
+        exit(EXIT_FAILURE);
+    }
+    // load the data into memory
+    num_parts = fread(inventory, sizeof(struct part), space_available, readfile);
+    num_parts--;    // as num_parts is 0-indexed
+    printf("Parts read: %d\n", num_parts);
+
+    fclose(readfile);
 }
