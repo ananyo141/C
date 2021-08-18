@@ -2,6 +2,7 @@
 // merged binary containing the sorted inventory.
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define NAME_LEN 25
 
 // parts structure
@@ -49,14 +50,29 @@ int main(int argc, char *argv[]) {
     // read and sort the second binary to buffer
     struct part temp;
     while (fread(&temp, sizeof(struct part), 1, bin2)) {
-        // discard the failed read (trailing pseudo-part with 0 part number)
-        if (temp.number == 0)
+        // discard the failed read (trailing pseudo-part with 0 part number and null name)
+        if (!(*temp.name))
             continue;
         int index;
         // find the place according to part number
         for (index = 0; index < totalPart; index++)
-            if (buffer[index].number > temp.number)
+            if (temp.number <= buffer[index].number)
                 break;
+
+        // if part number exists, combine parts
+        if (temp.number == buffer[index].number) {
+            // check if part names match
+            if (strcmp(temp.name, buffer[index].name) != 0) {
+                printf("Conflicting Parts:\n%d -> %s\n%d -> %s\n", temp.number, temp.name,
+                        buffer[index].number, buffer[index].name);
+                continue;
+            }
+            // combine part number quantity
+            printf("Combining Parts:\n%d -> %s\n%d -> %s\n", temp.number, temp.name,
+                    buffer[index].number, buffer[index].name);
+            buffer[index].on_hand += temp.on_hand;
+            continue;
+        }
         // make place to insert part
         for (int k = totalPart - 1; k >= index; k--)
             buffer[k + 1] = buffer[k];
@@ -67,7 +83,7 @@ int main(int argc, char *argv[]) {
     }
     fclose(bin2);
 
-    printf("Total Parts after merging '%s' : %d\nParts Found: ", argv[2], totalPart);
+    printf("Total Parts after merging '%s' : %d\nParts Saved: ", argv[2], totalPart);
     for (int z = 0; z < totalPart; z++)
         printf("%d ", buffer[z].number);
     printf("\n");

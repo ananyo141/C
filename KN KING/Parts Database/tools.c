@@ -75,8 +75,10 @@ void update(void) {
 }
 
 void print(void) {
-    printf("Part Number      Part Name                 "
+    printf(" Part Number     Part Name                 "
            "Quantity on Hand\n");
+    printf("------------    -----------                "
+           "----------------\n");
 
     for (int i = 0; i < num_parts; i++) 
         printf("%5d            %-26s%8d\n", inventory[i].number, inventory[i].name, inventory[i].on_hand);
