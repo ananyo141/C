@@ -34,21 +34,31 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    int i;
+    int totalPart;
     // read the data of first binary to buffer
-    for (i = 0; fread(&buffer[i], sizeof(struct part), 1, bin1); i++) ;
+    for (totalPart = 0; fread(&buffer[totalPart], sizeof(struct part), 1, bin1); totalPart++) ;
+    fclose(bin1);
 
     // read and sort the second binary to buffer
     struct part temp;
     while (fread(&temp, sizeof(struct part), 1, bin2)) {
         int index;
         // find the place according to part number
-        for (index = 0; index < i; index++)
+        for (index = 0; index < totalPart; index++)
             if (buffer[index].number > temp.number)
                 break;
+        // make place to insert part
+        for (int k = totalPart - 1; k >= totalPart; k--)
+            buffer[k + 1] = buffer[k];
+        // insert part
+        buffer[totalPart] = temp;
 
-    fclose(bin1);
+        totalPart++;    // update total part count
+    }
     fclose(bin2);
+
+    // write contents of buffer into save binary
+    fwrite(buffer, sizeof(struct part), totalPart, binOut);
     fclose(binOut);
 
     return 0;
