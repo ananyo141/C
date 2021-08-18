@@ -13,7 +13,7 @@ int main() {
     // make initial space for inventory 
     inventory = malloc (sizeof(struct part) * PARTS_SPACE_INCREMENT);
     if (inventory == NULL) {
-        printf("Heap memory failure, failed to initialize database\n"); 
+        puts("Heap memory failure, failed to initialize database"); 
         exit(EXIT_FAILURE);
     }
 
@@ -24,21 +24,21 @@ int main() {
         printf("Enter Command: ");
         read_line(command, COMMAND_LEN);
 
-        if      (strcmp (command, "insert") == 0)  available_commands[INSERT] ();
-        else if (strcmp (command, "search") == 0)  available_commands[SEARCH] ();
-        else if (strcmp (command, "update") == 0)  available_commands[UPDATE] ();
-        else if (strcmp (command, "print" ) == 0)  available_commands[PRINT]  ();
-        else if (strcmp (command, "save"  ) == 0)  available_commands[SAVE]   ();    
-        else if (strcmp(command, "restore") == 0)  available_commands[RESTORE]();
-        else if (strcmp(command, "exit"   ) == 0)  {
-            printf("\n*** Thank you for using Parts Database written in C ***\n\n");
+        if      (strcmp (command, "insert" ) == 0)  available_commands[INSERT] ();
+        else if (strcmp (command, "search" ) == 0)  available_commands[SEARCH] ();
+        else if (strcmp (command, "update" ) == 0)  available_commands[UPDATE] ();
+        else if (strcmp (command, "print"  ) == 0)  available_commands[PRINT]  ();
+        else if (strcmp (command, "save"   ) == 0)  available_commands[SAVE]   ();    
+        else if (strcmp (command, "restore") == 0)  available_commands[RESTORE]();
+        else if (strcmp (command, "exit"   ) == 0)  {
+            puts("\n*** Thank you for using Parts Database written in C ***\n");
             return 0;                              
         }
         else
             puts("Invalid command");
 
         if (is_full()) {
-            printf("Extending storage for more storage allocation\n");
+            puts("Extending storage for more storage allocation");
             expand(PARTS_SPACE_INCREMENT);
         }
     }

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #define NAME_LEN 25
 
+// parts structure
 struct part {
     int number;
     char name[NAME_LEN + 1];
@@ -42,16 +43,19 @@ int main(int argc, char *argv[]) {
     // read and sort the second binary to buffer
     struct part temp;
     while (fread(&temp, sizeof(struct part), 1, bin2)) {
+        // ignore a trailing pseudo-part with 0 part number
+        if (temp.number == 0)
+            continue;
         int index;
         // find the place according to part number
         for (index = 0; index < totalPart; index++)
             if (buffer[index].number > temp.number)
                 break;
         // make place to insert part
-        for (int k = totalPart - 1; k >= totalPart; k--)
+        for (int k = totalPart - 1; k >= index; k--)
             buffer[k + 1] = buffer[k];
         // insert part
-        buffer[totalPart] = temp;
+        buffer[index] = temp;
 
         totalPart++;    // update total part count
     }
@@ -60,6 +64,7 @@ int main(int argc, char *argv[]) {
     // write contents of buffer into save binary
     fwrite(buffer, sizeof(struct part), totalPart, binOut);
     fclose(binOut);
+    printf("Binaries merged and saved as %s\n", argv[3]);
 
     return 0;
 }
