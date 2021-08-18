@@ -41,6 +41,11 @@ int main(int argc, char *argv[]) {
     totalPart--;    // discard the failed read
     fclose(bin1);
 
+    printf("Total Parts in '%s' : %d\nParts Found: ", argv[1], totalPart);
+    for (int z = 0; z < totalPart; z++) 
+        printf("%d ", buffer[z].number);
+    printf("\n");
+
     // read and sort the second binary to buffer
     struct part temp;
     while (fread(&temp, sizeof(struct part), 1, bin2)) {
@@ -62,8 +67,13 @@ int main(int argc, char *argv[]) {
     }
     fclose(bin2);
 
+    printf("Total Parts after merging '%s' : %d\nParts Found: ", argv[2], totalPart);
+    for (int z = 0; z < totalPart; z++)
+        printf("%d ", buffer[z].number);
+    printf("\n");
+
     // write contents of buffer into save binary
-    fwrite(buffer, sizeof(struct part), totalPart, binOut);
+    fwrite(buffer, sizeof(struct part), totalPart + 1, binOut);
     fclose(binOut);
     printf("Binaries merged and saved as %s\n", argv[3]);
 
