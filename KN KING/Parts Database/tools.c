@@ -119,7 +119,7 @@ void save(void) {
 void restore(void) {
     FILE *readfile;
     char readfilename[FILENAME_MAX];
-    printf("Enter the save filepath: ");
+    printf("Enter the restore filepath: ");
     read_line(readfilename, FILENAME_MAX);
     if ((readfile = fopen(readfilename, "rb")) == NULL) {
         printf("File %s couldn't be read\n", readfilename);
