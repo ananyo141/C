@@ -1,5 +1,5 @@
 inventory: inventory.o readline.o tools.o
-	gcc -o inventory inventory.o readline.o tools.o
+	gcc -o inventory.out inventory.o readline.o tools.o
 
 inventory.o: inventory.c readline.h tools.h
 	gcc -c inventory.c
