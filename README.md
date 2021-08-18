@@ -14,4 +14,4 @@ git clone https://github.com/ananyo141/C.git
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-Suggestions are encouraged. I'm a beginner who just started progamming, so please be kind!
+Suggestions are encouraged. I'm a beginner who just started programming, so please be kind!
