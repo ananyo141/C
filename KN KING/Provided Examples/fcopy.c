@@ -1,10 +1,13 @@
 // Copy a file //
 #include <stdio.h>
 #include <stdlib.h>
+#define BLOCK_SIZE 512
+
+typedef unsigned char BYTE;
 
 int main(int argc, char *argv[]) {
     FILE *source_fp, *dest_fp;
-    int ch;
+    BYTE *buffer;
 
     if (argc != 3) {
         fprintf(stderr, "Usage: fcopy source dest\n");
@@ -22,11 +25,19 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    while ((ch = getc(source_fp)) != EOF) 
-        putc(ch, dest_fp);
+    if ((buffer = malloc(sizeof(BYTE) * BLOCK_SIZE)) == NULL) {
+        fprintf(stderr, "Couldn't allocate memory to buffer");
+        exit(EXIT_FAILURE);
+    }
+
+    int block_read;
+    while (block_read = fread(buffer, sizeof(BYTE), BLOCK_SIZE, source_fp)) 
+        fwrite(buffer, sizeof(BYTE), block_read, dest_fp);
 
     fclose(source_fp);
-    fclose(dest_fp);    
+    fclose(dest_fp);
+    free(buffer); 
+    printf("File copied at %s\n", argv[2]);   
 
     return 0;
 }
