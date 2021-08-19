@@ -159,9 +159,11 @@ void save(void) {
     // write data to save file
     // visit each node, write part number, name and quantity
     for (struct part *p = inventory; p != NULL; p = p->next) {
-        fwrite(&p->number, sizeof(int), 1, savefile);                  // write part number
-        fwrite(&p->name, sizeof(char), strlen(p->name) + 1, savefile); // write part name
-        fwrite(&p->on_hand, sizeof(int), 1, savefile);                 // write quantity
+        fwrite(&p->number, sizeof(int), 1, savefile);   // write part number
+        for (int k = 0; p->name[k]; k++)                // write part name
+            putc(p->name[k], savefile);
+        putc('\0', savefile);
+        fwrite(&p->on_hand, sizeof(int), 1, savefile);  // write part quantity
     }
     puts("Savefile generated");
 
@@ -186,8 +188,8 @@ void restore(void) {
     // rebuild the linked list from the entered file
     struct part *curr, *prev = inventory;
     for (;;) {
-        struct part *curr = malloc(sizeof(struct part));
-        if (curr = NULL) {
+        curr = malloc(sizeof(struct part));
+        if (curr == NULL) {
             fprintf(stderr, "Unable to allocate memory. Terminating...\n");
             exit(EXIT_FAILURE);
         }
@@ -195,7 +197,7 @@ void restore(void) {
         if (!(fread(&temp_numb, sizeof(int), 1, readfile))) {
             if (prev != NULL)
                 prev->next = NULL;
-            free(curr); // list ends
+            free(curr); // end list
             break;
         }
         curr->number = temp_numb;
@@ -203,12 +205,15 @@ void restore(void) {
             curr->name[i++] = ch;
         curr->name[i] = '\0';
         fread(&curr->on_hand, sizeof(int), 1, readfile);
-        if (prev = NULL) 
+        if (prev == NULL) 
             inventory = curr;
         else 
             prev->next = curr;
         prev = curr;
     }
+    puts("Savefile loaded");
+
+    fclose(readfile);
 }
 
 // read string from stdin
