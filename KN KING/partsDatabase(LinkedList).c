@@ -182,23 +182,33 @@ void restore(void) {
         next_p = p->next;
         free(p);
     }
+    inventory = NULL;   // inventory is now null
     // rebuild the linked list from the entered file
-    int temp_numb, temp_onhand;
-    char temp_name[NAME_LEN];
-    for (struct part *p = inventory; p != NULL; p = p->next) {
-        p = malloc(sizeof(struct part));
-        if (p = NULL) {
+    struct part *curr, *prev = inventory;
+    for (;;) {
+        struct part *curr = malloc(sizeof(struct part));
+        if (curr = NULL) {
             fprintf(stderr, "Unable to allocate memory. Terminating...\n");
             exit(EXIT_FAILURE);
         }
-        if (!(fread(&temp_numb, sizeof(int), 1, readfile)))
+        int temp_numb, ch, i = 0;
+        if (!(fread(&temp_numb, sizeof(int), 1, readfile))) {
+            if (prev != NULL)
+                prev->next = NULL;
+            free(curr); // list ends
             break;
-        int ch, i = 0;
+        }
+        curr->number = temp_numb;
         while ((ch = getc(readfile)) != '\0')
-            temp_name[i++] = ch;
-        temp_name[i] = '\0';
-        fread(&temp_onhand, sizeof(int), 1, readfile);}
-
+            curr->name[i++] = ch;
+        curr->name[i] = '\0';
+        fread(&curr->on_hand, sizeof(int), 1, readfile);
+        if (prev = NULL) 
+            inventory = curr;
+        else 
+            prev->next = curr;
+        prev = curr;
+    }
 }
 
 // read string from stdin
