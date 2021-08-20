@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
     fclose(input);
     fclose(output);
-
+    puts("File successfully converted to Unix Format with LF End-Of-Line-Sequence");
 
     return 0;
 }
