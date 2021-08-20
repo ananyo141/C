@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     }
 
     if ((buffer = malloc(sizeof(BYTE) * BLOCK_SIZE)) == NULL) {
-        fprintf(stderr, "Couldn't allocate memory to buffer");
+        fprintf(stderr, "Couldn't allocate memory to buffer\n");
         exit(EXIT_FAILURE);
     }
 
