@@ -3,7 +3,7 @@
 #include "arrayUtils.h"
 
 int main() {
-    int sortedArr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    double sortedArr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int delElem, arrSize = sizeof(sortedArr) / sizeof(sortedArr[0]);
     puts("Sorted Array: ");
     printArray(sortedArr, arrSize);

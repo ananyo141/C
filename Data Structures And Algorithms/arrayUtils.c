@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include "arrayUtils.h"
 
-/* Print the given integer array */
-void printArray(int arr[], int len) {
+/* Print the given array */
+void printArray(double arr[], int len) {
     for (int i = 0; i < len; i++)
-        printf("%d ", arr[i]);
+        printf("%g ", arr[i]);
     printf("\n");
 }
 
-/* Read into an integer array of length 'len' */
-void readArray(int arr[], int len) {
+/* Read into an array of length 'len' */
+void readArray(double arr[], int len) {
     for (int i = 0; i < len; i++) {
         printf("Arr[%d] = ", i + 1);
-        scanf("%d", &arr[i]);
+        scanf("%lf", &arr[i]);
     }
 }
