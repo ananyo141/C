@@ -1,6 +1,6 @@
 // Delete a number from an array that is already sorted in ascending order.
 #include <stdio.h>
-#include "printArray.h"
+#include "arrayUtils.h"
 
 int main() {
     int sortedArr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};

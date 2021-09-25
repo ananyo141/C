@@ -1,7 +1,7 @@
 // Merge two unsorted arrays.
 #include <stdio.h>
 #include <string.h>
-#include "printArray.h"
+#include "arrayUtils.h"
 
 int main() {
     int arr1[] = {7, 4, 7, 5, 8, 2, 4};
