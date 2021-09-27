@@ -11,7 +11,7 @@ void printArray(double arr[], int len) {
 /* Read into an array of length 'len' */
 void readArray(double arr[], int len) {
     for (int i = 0; i < len; i++) {
-        printf("Arr[%d] = ", i + 1);
+        printf("Arr[%d] = ", i);
         scanf("%lf", &arr[i]);
     }
 }
