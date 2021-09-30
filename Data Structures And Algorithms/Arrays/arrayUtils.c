@@ -15,3 +15,16 @@ void readArray(double arr[], int len) {
         scanf("%lf", &arr[i]);
     }
 }
+
+/* Enter prompt for elements and accept elements upto
+   'maxlen' or a newline (whichever comes first) */
+int freeRead(double arr[], int maxlen) {
+    int len = 0;
+    printf("Enter elements: ");
+    for (;;) {
+        scanf("%lf", &arr[len++]);
+        if (getchar() == '\n' || len == maxlen - 1) // prevent overflow
+            break;
+    }
+    return len;
+}
