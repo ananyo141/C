@@ -12,9 +12,9 @@ int main() {
         pascalTriangle[row][0] = 1;       // set every first element of row to 1
         for (col = 1; col <= row; col++)  // cell value is equal to sum of one cell up and one cell diag up to left
             pascalTriangle[row][col] = pascalTriangle[row - 1][col] + pascalTriangle[row - 1][col - 1];
-        if (row < rowNum - 1)
-            pascalTriangle[row][col] = 0; // set every last (column + 1) to be (invisibly) 0, so that next row column
-    }                                     // can add the empty cell as 0 (skip last row since that index in unbounded)
+        if (row < rowNum - 1)             // set every last (column + 1) to be (invisibly) 0, so that next row column
+            pascalTriangle[row][col] = 0; // can add the empty cell as 0 (skip last row since that index in unbounded)
+    }                                     
 
     // Print the pascal triangle
     for (int i = 0; i < rowNum; i++) {
