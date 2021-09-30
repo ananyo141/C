@@ -5,8 +5,7 @@ int main() {
     int rowNum;
     printf("Enter the number of rows you want to create Pascal's Triangle: ");
     scanf("%d", &rowNum);
-    int row, col;
-    int **const pascalTriangle = malloc(sizeof(int) * (rowNum * rowNum + 1));    
+    int row, col, pascalTriangle[rowNum][rowNum];    
 
     // Loop to form the pascal triangle and store in array
     for (row = 0; row < rowNum; row++) {
@@ -23,8 +22,6 @@ int main() {
             printf("%-4d", pascalTriangle[i][j]);
         printf("\n");
     }
-
-    free(pascalTriangle);
 
     return 0;
 }
