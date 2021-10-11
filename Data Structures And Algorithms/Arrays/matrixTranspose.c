@@ -16,7 +16,9 @@ int main() {
         for (int j = 0; j < n; j++)
             transpose[j][i] = array[i][j];
     
+    puts("\nUser Matrix:");
     printMatrix(m, n, array);
+    puts("\nMatrix Transposed:");
     printMatrix(n, m, transpose);
 
     return 0;
