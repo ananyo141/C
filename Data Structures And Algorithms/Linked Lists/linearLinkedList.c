@@ -69,7 +69,7 @@ int main() {
             continue;
         }
         start = commands[option-1](start);
-	puts("Operation Completed successfully");
+        puts("Operation Completed successfully");
     } 
     puts("Exit");
     delete_list(start); // all the heap memory is released
