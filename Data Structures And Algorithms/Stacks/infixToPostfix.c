@@ -19,7 +19,7 @@ int main() {
     // read input from console
     while ((inp = getchar()) != '\n') {
         // if char is a digit or operand, just print,
-        if (isdigit(inp) || isalpha(inp))
+        if (isalnum(inp))
             putchar(inp);
         // if char is (, mark and push into stack,
         else if (inp == '(')
@@ -35,7 +35,8 @@ int main() {
         // if char is operator, pop stack upto ( or while operator precedence of
         // stack is greater than current operator and push current operator to stack,
         else if (strchr("+-*/%", inp) != NULL) {
-            while (popUptoBrkt(opStack) && precedence(peek(opStack)) > precedence(inp))
+            while (popUptoBrkt(opStack) && 
+                   precedence(peek(opStack)) >= precedence(inp))
                 putchar(pop(opStack));
             push(opStack, inp);
         }
