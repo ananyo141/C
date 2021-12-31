@@ -15,8 +15,8 @@
 #define DEBUG(elem,type) fprintf(stderr, #elem "\t= " type "\n", elem); \
                          fflush(stderr)
 
-//#undef  DEBUG                 // comment/uncomment these two lines
-//#define DEBUG(elem,type)      // to toggle logging to stderr
+#undef  DEBUG                 // comment/uncomment these two lines
+#define DEBUG(elem,type)      // to toggle logging to stderr
 
 // Multiple Queue Data Aggregation //
 typedef struct multiple_queue {
@@ -140,7 +140,7 @@ int isemptyB(const multiQ mqueue) {
 int liftPartition(const multiQ mqueue) {
     /* Check whether conditions for lifting partition
     is fulfilled */
-    return (isemptyA(mqueue) && isemptyB(mqueue)) ||
+    return (isemptyA(mqueue) && isemptyB(mqueue)) ||   // if both are empty, else test true for all of these:
            (mqueue->frontA <= mqueue->rearA       &&   // if frontA is less equal to rearA
             mqueue->rearA  < mqueue->partition    &&   // and rearA is less than partition
             !isfullA(mqueue) && !isfullB(mqueue)  &&
@@ -165,8 +165,8 @@ void insertA(multiQ mqueue) {
         mqueue->rearB = mqueue->frontB;     // and mark queue B as full
     }
     printf("Enter value: ");
-    scanf("%lf", &mqueue->arr[mqueue->rearA]);      // save and 
-    mqueue->rearA = INC_A(mqueue->rearA, mqueue);   // increment 
+    scanf("%lf", &mqueue->arr[mqueue->rearA]);      // save and
+    mqueue->rearA = INC_A(mqueue->rearA, mqueue);   // increment
 }
 
 void insertB(multiQ mqueue) {
